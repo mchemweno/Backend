@@ -13,6 +13,10 @@ Required fields
 * email
 * password
 
+#### Response
+* HTTP_204 - Ok 
+   * auth_token
+
 ## Create Users
 http://127.0.0.1:8000/professionals_app/users/
 
@@ -28,7 +32,15 @@ Required fields
 * service
 * email
 * password
-* re_password
+* 
+
+#### Responses
+* HTTP_201 - SUccessfully created
+* HTTP_400 - Bad request 
+    Either username exists
+    Passwords dont match
+    All required fields have not been filled
+
 
 # Get user details, update user details and update only one field user field
 http://127.0.0.1:8000/professionals_app/users/me/
@@ -50,11 +62,22 @@ Required fields
 * password
 * re_password
 
+#### Responses 
+* HTTP_200 - Succesful
+* HTTP_400 - Bad request
+    Fields required have not been filled
+
 
 ### Method=PATCH
 Can be used to update details. With just one single required field.
 Required fields 
 * The field you want to update
+
+#### Responses
+* HTTP_200 - Succesful
+* HTTP_400 - Bad request
+    Fields required have not been filled
+
 
 # Resend activation email
 http://127.0.0.1:8000/professionals_app/users/resend_activation
@@ -67,6 +90,9 @@ Required fields
 ## Logout
 http://127.0.0.1:8000/professionals_app/token/logout
 
+#### Responses
+* HTTP_204 - No content
+
 ### Method=GET
 
 ## Provides the list of all the users
@@ -77,6 +103,11 @@ http://127.0.0.1:8000/professionals_app/userlist/
 ## Filters the users by email
 http://127.0.0.1:8000/professionals_app/userlist/user's email
 
+#### Responses
+* HTTP_200
+
+If no users available it will return an empty array
+
 ### Method=GET
 
 ## Filters users by service
@@ -84,27 +115,48 @@ http://127.0.0.1:8000/professionals_app/userlist/service/service_name
 
 ### Method=GET
 
+#### Responses
+* HTTP_200 - User found
+* HTTP_404 - No user
 
 ## Provides a list of all categories.
 http://127.0.0.1:8000/professionals_app/categories/
+
+#### Responses
+* HTTP_200
+
+If no users available it will return an empty array
 
 ### Method=GET
 
 ## Filters category by name
 http://127.0.0.1:8000/professionals_app/categories/category_name
 
+
 ### Method=GET
 
+#### Responses
+* HTTP_200 - User found
+* HTTP_404 - No user
 
 ## Provides a list of all services
 http://127.0.0.1:8000/professionals_app/services
 
 ### Method=GET
 
+#### Responses
+* HTTP_200
+
+If no users available it will return an empty array
+
 ## Filters service by name
 http://127.0.0.1:8000/professionals_app/services/category_name
 
 ### Method=GET
+
+#### Responses
+* HTTP_200 - User found
+* HTTP_404 - No user
 
 ## Password reset
 http://127.0.0.1:8000/professionals_app/users/reset_password/
@@ -113,6 +165,11 @@ http://127.0.0.1:8000/professionals_app/users/reset_password/
 
 Required
 * email
+
+#### Responses
+* HTTP_204 - No content
+* HTTP_400 - Bad request email not available in the database
+
 
 ## Password set
 http://127.0.0.1:8000/professionals_app/users/set_password
@@ -123,6 +180,15 @@ http://127.0.0.1:8000/professionals_app/users/set_password
 * new_password
 * re_new_password
 * current_password
+
+#### Responses
+
+* HTTP_204 - No content
+            succesful request. 
+* HTTP_400 - Bad request
+        Lack of required fields
+        Password not same.
+        Wrong password
 
 
 The filters are not case sensitive therefore searching netwroking will return Networking and vice versa.
