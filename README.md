@@ -98,17 +98,23 @@ http://127.0.0.1:8000/professionals_app/token/logout
 ## Provides the list of all the users
 http://127.0.0.1:8000/professionals_app/userlist/
 
-### Method=GET
-
-## Filters the users by email
-http://127.0.0.1:8000/professionals_app/userlist/user's email
-
 #### Responses
 * HTTP_200
 
 If no users available it will return an empty array
 
+
 ### Method=GET
+
+## Filters the users by email
+http://127.0.0.1:8000/professionals_app/userlist/user's email
+
+
+### Method=GET
+
+#### Responses
+* HTTP_200 - User found
+* HTTP_404 - No user
 
 ## Filters users by service
 http://127.0.0.1:8000/professionals_app/userlist/service/service_name
