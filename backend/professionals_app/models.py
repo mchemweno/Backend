@@ -16,7 +16,7 @@ class Category(models.Model):
 class Service(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     service_name = models.CharField(max_length=25)
-    searches = models.IntegerField()
+    searches = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.id) + ". " + self.service_name
@@ -35,7 +35,8 @@ class User(AbstractUser):
     phone = models.CharField(null=True, max_length=25)
     profile_picture = ProcessedImageField(upload_to='profile_pictures/%y/%m/%d', processors=[ResizeToFill(300, 300)],
                                           format='PNG')
-    # user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, null=True)
+    average_rating = models.IntegerField(default=0)
+    # user_type = models.ForeignKey(UserType, on_delete=models.CASCADE)
     # service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
     REQUIRED_FIELDS = ['username', 'profile_picture', 'phone', 'first_name', 'last_name', 'bio']
 

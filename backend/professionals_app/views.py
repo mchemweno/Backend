@@ -78,10 +78,22 @@ def services(request, *args, **kwargs):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+def Service_category(request, category_service, *args, **kwargs):
+    try:
+        service = Service.objects.get(category_contains=category_service)
+        serializer = ServiceSerializer(service)
+        return JsonResponse(serializer.data, safe=False)
+    except Service.DoesNotExist:
+        return HttpResponse(status=404)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def service_detail(request, service_name, *args, **kwargs):
     try:
         service = Service.objects.get(service_name__contains=service_name)
         serializer = ServiceSerializer(service)
+        service.searches + 1
         return JsonResponse(serializer.data, safe=False)
     except Category.DoesNotExist:
         return HttpResponse(status=404)
