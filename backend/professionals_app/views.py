@@ -1,16 +1,12 @@
 import requests
-from django.core.checks import messages
+
 from django.http import JsonResponse, HttpResponse
-from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.shortcuts import render
 
 from .serializers import *
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from djoser.conf import django_settings
-
-from rest_framework import status
 
 
 # Create your views here.
@@ -37,11 +33,11 @@ def user_detail(request, email, *args, **kwargs):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def user_service(request, service_name, *args, **kwargs):
+# @permission_classes([IsAuthenticated])
+def user_service(request, service_name, *args, **kwargs, ):
     try:
-        user = User.objects.get(service__service_name__contains=service_name)
-        serializer = UserCreateSerializer(user, context={"request": request}, )
+        user = User.objects.getor(service__service_name__contains=service_name.capitalize())
+        serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
         return HttpResponse(status=404)
@@ -78,10 +74,10 @@ def services(request, *args, **kwargs):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def Service_category(request, category_service, *args, **kwargs):
+def service_category(request, category, *args, **kwargs):
     try:
-        service = Service.objects.get(category_contains=category_service)
-        serializer = ServiceSerializer(service)
+        service = Service.objects.filter(category=category)
+        serializer = ServiceSerializer(service, many=True)
         return JsonResponse(serializer.data, safe=False)
     except Service.DoesNotExist:
         return HttpResponse(status=404)
@@ -91,14 +87,16 @@ def Service_category(request, category_service, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def service_detail(request, service_name, *args, **kwargs):
     try:
-        service = Service.objects.get(service_name__contains=service_name)
+        service = Service.objects.get(service_name__contains=service_name.capitalize())
+        service.searches += 1
+        service.save()
         serializer = ServiceSerializer(service)
-        service.searches + 1
-        return JsonResponse(serializer.data, safe=False)
-    except Category.DoesNotExist:
+        return Response(serializer.data)
+    except Service.DoesNotExist:
         return HttpResponse(status=404)
 
 
+# Reset password, send activation email and resend activation email.
 @api_view(['GET'])
 def get(request, uid, token, *args, **kwargs):
     protocol = 'https://' if request.is_secure() else 'http://'

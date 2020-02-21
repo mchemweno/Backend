@@ -34,11 +34,11 @@ class User(AbstractUser):
     bio = models.TextField(max_length=500, null=True)
     phone = models.CharField(null=True, max_length=25)
     profile_picture = ProcessedImageField(upload_to='profile_pictures/%y/%m/%d', processors=[ResizeToFill(300, 300)],
-                                          format='PNG')
+                                          format='PNG', blank=True)
     average_rating = models.IntegerField(default=0)
-    # user_type = models.ForeignKey(UserType, on_delete=models.CASCADE)
-    # service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
-    REQUIRED_FIELDS = ['username', 'profile_picture', 'phone', 'first_name', 'last_name', 'bio']
+    user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, default=1)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
+    REQUIRED_FIELDS = ['username', 'profile_picture', 'phone', 'first_name', 'last_name', 'bio', 'average_rating', 'user_type', 'service']
 
     USERNAME_FIELD = 'email'
 
@@ -49,7 +49,6 @@ class User(AbstractUser):
 class Reviews(models.Model):
     review = models.CharField(max_length=500)
     rating = models.IntegerField()
-    reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
     reviewee = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

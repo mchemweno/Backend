@@ -1,5 +1,6 @@
-
 from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
+
 from . import views
 from .views import *
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('categories/<str:category_name>', views.category_detail),
     path('services/', views.services),
     path('services/<str:service_name>', views.service_detail),
+    path('services/category/<int:category>', views.service_category),
     path('users/activate/<str:uid>/<str:token>', views.get),
     path('users/password-reset/<str:uid>/<str:token>', views.reset),
 ]
