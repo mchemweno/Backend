@@ -2,6 +2,7 @@ import requests
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
+from rest_framework import status
 
 from .serializers import *
 from rest_framework.decorators import api_view, permission_classes
@@ -16,9 +17,12 @@ from rest_framework.response import Response
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_list(request, *args, **kwargs):
-    users = User.objects.all()
-    serializer = UserCreateSerializer(users, context={"request": request}, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    try:
+        users = User.objects.all()
+        serializer = UserCreateSerializer(users, context={"request": request}, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
 
 
 @api_view(['GET'])
@@ -26,6 +30,8 @@ def user_list(request, *args, **kwargs):
 def user_detail(request, email, *args, **kwargs):
     try:
         user = User.objects.get(email__contains=email)
+        user.average_rating = calculate_average_review(id=user.id)
+        user.save()
         serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
@@ -33,7 +39,7 @@ def user_detail(request, email, *args, **kwargs):
 
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def user_service(request, service_name, *args, **kwargs, ):
     try:
         user = User.objects.getor(service__service_name__contains=service_name.capitalize())
@@ -47,16 +53,19 @@ def user_service(request, service_name, *args, **kwargs, ):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def categories(request, *args, **kwargs):
-    category = Category.objects.all()
-    serializer = CategorySerializer(category, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    try:
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    except Category.DoesNotExist:
+        return HttpResponse(status=404)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def category_detail(request, category_name, *args, **kwargs):
     try:
-        category = Category.objects.get(category_name__contains=category_name)
+        category = Category.objects.filter(category_name__contains=category_name)
         serializer = CategorySerializer(category)
         return JsonResponse(serializer.data, safe=False)
     except Category.DoesNotExist:
@@ -67,9 +76,12 @@ def category_detail(request, category_name, *args, **kwargs):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def services(request, *args, **kwargs):
-    service = Service.objects.all()
-    serializer = ServiceSerializer(service, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    try:
+        service = Service.objects.all().order_by('-searches')
+        serializer = ServiceSerializer(service, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    except Service.DoesNotExist:
+        return HttpResponse(status=404)
 
 
 @api_view(['GET'])
@@ -87,13 +99,33 @@ def service_category(request, category, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def service_detail(request, service_name, *args, **kwargs):
     try:
-        service = Service.objects.get(service_name__contains=service_name.capitalize())
+        service = Service.objects.get(service_name=service_name.capitalize())
         service.searches += 1
         service.save()
         serializer = ServiceSerializer(service)
         return Response(serializer.data)
     except Service.DoesNotExist:
         return HttpResponse(status=404)
+
+
+# Review views
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def review(request, reviewee_id, *args, **kwargs):
+    if request.method == 'POST':
+        data = request.data
+        serializer = ReviewSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    else:
+        try:
+            reviews = Review.objects.filter(reviewee=reviewee_id, )
+            serializer = ReviewSerializer(reviews, many=True)
+            return Response(serializer.data)
+        except Review.DoesNotExist:
+            return HttpResponse(status=404)
 
 
 # Reset password, send activation email and resend activation email.
@@ -128,3 +160,19 @@ def reset(request, uid, token, *args, **kwargs):
             return render(request, 'professionals_app/unsuccessful_reset.html')
     else:
         return render(request, 'professionals_app/reset_password.html')
+
+
+# calculate reviewers average
+def calculate_average_review(id):
+    try:
+        reviews = Review.objects.filter(reviewee=id)
+        total_rating = 0
+        counter = 0
+        for review in reviews:
+            total_rating = total_rating + review.rating
+            counter = counter + 1
+
+        average_rating = round(total_rating / counter)
+        return average_rating
+    except Review.DoesNotExist:
+        return 1

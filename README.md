@@ -32,7 +32,7 @@ Required fields
 * service
 * email
 * password
-* 
+* re_password
 
 #### Responses
 * HTTP_201 - SUccessfully created
@@ -99,9 +99,8 @@ http://127.0.0.1:8000/professionals_app/token/logout
 http://127.0.0.1:8000/professionals_app/userlist/
 
 #### Responses
-* HTTP_200
-
-If no users available it will return an empty array
+* HTTP_200 - ok
+* HTTP_404 - No users
 
 
 ### Method=GET
@@ -129,9 +128,8 @@ http://127.0.0.1:8000/professionals_app/userlist/service/service_name
 http://127.0.0.1:8000/professionals_app/categories/
 
 #### Responses
-* HTTP_200
-
-If no users available it will return an empty array
+* HTTP_200 - ok
+* HTTP_404 -No user
 
 ### Method=GET
 
@@ -151,7 +149,8 @@ http://127.0.0.1:8000/professionals_app/services
 ### Method=GET
 
 #### Responses
-* HTTP_200
+* HTTP_200 - ok
+* HTTP_404 - No users
 
 If no users available it will return an empty array
 
@@ -163,6 +162,28 @@ http://127.0.0.1:8000/professionals_app/services/category_name
 #### Responses
 * HTTP_200 - User found
 * HTTP_404 - No user
+
+## Reviews API
+http://127.0.0.1:8000/professionals_app/reviews/reviewees-id
+
+### Metod=POST
+
+#### Required
+* review
+* rating
+* reviewee
+
+#### Responses
+* HTTP_201 - created
+* HTTP_400 - Bad request
+
+### Method=GET
+
+#### Respnses
+* HTTP_200 - ok
+* HTTp_404 - Does Not exist
+
+
 
 ## Password reset
 http://127.0.0.1:8000/professionals_app/users/reset_password/
@@ -197,14 +218,7 @@ http://127.0.0.1:8000/professionals_app/users/set_password
         Wrong password
 
 
-The filters are not case sensitive therefore searching netwroking will return Networking and vice versa.
-Also searchng work or net will return networking
-
-This applies to all the filters provided.
-
 You must also be authenticated to access all these APIs except the forgotten password and activation email links.
-Authentication fields are Email and Password.
+Authentication fields are Email and Password
 
-
-### Remaining
-* Database normalization. I feel we should critically look at it for one more time and make necessary changes.
+Services ordered by most popular

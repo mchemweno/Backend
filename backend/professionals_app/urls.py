@@ -1,8 +1,6 @@
 from django.urls import path, include
-from rest_framework.urlpatterns import format_suffix_patterns
 
 from . import views
-from .views import *
 
 app_name = 'professionals_app'
 urlpatterns = [
@@ -18,4 +16,5 @@ urlpatterns = [
     path('services/category/<int:category>', views.service_category),
     path('users/activate/<str:uid>/<str:token>', views.get),
     path('users/password-reset/<str:uid>/<str:token>', views.reset),
+    path('reviews/<int:reviewee_id>', views.review)
 ]
