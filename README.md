@@ -100,7 +100,7 @@ http://127.0.0.1:8000/professionals_app/userlist/
 
 #### Responses
 * HTTP_200 - ok
-* HTTP_404 - No users
+* Empty array if none
 
 
 ### Method=GET
@@ -129,7 +129,7 @@ http://127.0.0.1:8000/professionals_app/categories/
 
 #### Responses
 * HTTP_200 - ok
-* HTTP_404 -No user
+* Empty array if none
 
 ### Method=GET
 
@@ -140,7 +140,7 @@ http://127.0.0.1:8000/professionals_app/categories/category_name
 ### Method=GET
 
 #### Responses
-* HTTP_200 - User found
+* HTTP_200 - Category found
 * HTTP_404 - No user
 
 ## Provides a list of all services
@@ -150,18 +150,32 @@ http://127.0.0.1:8000/professionals_app/services
 
 #### Responses
 * HTTP_200 - ok
-* HTTP_404 - No users
+* Empty array if none
 
-If no users available it will return an empty array
+## Filters service by category name
+http://127.0.0.1:8000/professionals_app/services/category_name
+
+#### Responses
+* HTTP_200 - Service found
+* HTTP_404 - No service
 
 ## Filters service by name
-http://127.0.0.1:8000/professionals_app/services/category_name
+http://127.0.0.1:8000/professionals_app/services/service name
+
+#### Responses
+* HTTP_200 - Service found
+* HTTP_404 - No service found
+
+## Get most popular services
+http://127.0.0.1:8000/professionals_app/popular
 
 ### Method=GET
 
 #### Responses
-* HTTP_200 - User found
-* HTTP_404 - No user
+* HTTP_200 - services found
+* Empty array no services 
+
+
 
 ## Reviews API
 http://127.0.0.1:8000/professionals_app/reviews/reviewees-id
@@ -181,7 +195,7 @@ http://127.0.0.1:8000/professionals_app/reviews/reviewees-id
 
 #### Respnses
 * HTTP_200 - ok
-* HTTp_404 - Does Not exist
+* Empty array no reviews
 
 
 
@@ -220,5 +234,3 @@ http://127.0.0.1:8000/professionals_app/users/set_password
 
 You must also be authenticated to access all these APIs except the forgotten password and activation email links.
 Authentication fields are Email and Password
-
-Services ordered by most popular

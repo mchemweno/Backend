@@ -17,12 +17,9 @@ from rest_framework.response import Response
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_list(request, *args, **kwargs):
-    try:
-        users = User.objects.all()
-        serializer = UserCreateSerializer(users, context={"request": request}, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    except User.DoesNotExist:
-        return HttpResponse(status=404)
+    users = User.objects.all()
+    serializer = UserCreateSerializer(users, context={"request": request}, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['GET'])
@@ -42,7 +39,7 @@ def user_detail(request, email, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def user_service(request, service_name, *args, **kwargs, ):
     try:
-        user = User.objects.getor(service__service_name__contains=service_name.capitalize())
+        user = User.objects.get(service__service_name=service_name.capitalize())
         serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
@@ -53,20 +50,17 @@ def user_service(request, service_name, *args, **kwargs, ):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def categories(request, *args, **kwargs):
-    try:
-        category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    except Category.DoesNotExist:
-        return HttpResponse(status=404)
+    category = Category.objects.all()
+    serializer = CategorySerializer(category, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def category_detail(request, category_name, *args, **kwargs):
     try:
-        category = Category.objects.filter(category_name__contains=category_name)
-        serializer = CategorySerializer(category)
+        category = Category.objects.get(category_name=category_name)
+        serializer = CategorySerializer(category, context={"request": request})
         return JsonResponse(serializer.data, safe=False)
     except Category.DoesNotExist:
         return HttpResponse(status=404)
@@ -76,23 +70,25 @@ def category_detail(request, category_name, *args, **kwargs):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def services(request, *args, **kwargs):
-    try:
-        service = Service.objects.all().order_by('-searches')
-        serializer = ServiceSerializer(service, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    except Service.DoesNotExist:
-        return HttpResponse(status=404)
+    service = Service.objects.all()
+    serializer = ServiceSerializer(service, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def most_popular_services(request, *args, **kwargs):
+    service = Service.objects.all().order_by('-searches')[:6]
+    serializer = ServiceSerializer(service, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def service_category(request, category, *args, **kwargs):
-    try:
-        service = Service.objects.filter(category=category)
-        serializer = ServiceSerializer(service, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    except Service.DoesNotExist:
-        return HttpResponse(status=404)
+    service = Service.objects.filter(category__category_name=category.capitalize())
+    serializer = ServiceSerializer(service, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 @api_view(['GET'])
@@ -103,7 +99,9 @@ def service_detail(request, service_name, *args, **kwargs):
         service.searches += 1
         service.save()
         serializer = ServiceSerializer(service)
-        return Response(serializer.data)
+        user = User.objects.filter(service=service.id)
+        serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
+        return JsonResponse({'service': serializer.data, 'professionals': serializer1.data}, safe=False)
     except Service.DoesNotExist:
         return HttpResponse(status=404)
 
@@ -120,12 +118,9 @@ def review(request, reviewee_id, *args, **kwargs):
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     else:
-        try:
-            reviews = Review.objects.filter(reviewee=reviewee_id, )
-            serializer = ReviewSerializer(reviews, many=True)
-            return Response(serializer.data)
-        except Review.DoesNotExist:
-            return HttpResponse(status=404)
+        reviews = Review.objects.filter(reviewee=reviewee_id, )
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
 
 
 # Reset password, send activation email and resend activation email.
