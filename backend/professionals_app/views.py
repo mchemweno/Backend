@@ -70,9 +70,16 @@ def category_detail(request, category_name, *args, **kwargs):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def services(request, *args, **kwargs):
-    service = Service.objects.all()
-    serializer = ServiceSerializer(service, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    serviceArray = []
+    services = Service.objects.all()
+    for service in services:
+        user = User.objects.filter(service=service.id)
+        serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
+        serializer = ServiceSerializer(service)
+        data = {'service': serializer.data, 'professional': serializer1.data}
+        serviceArray.append(data)
+    print(serviceArray)
+    return JsonResponse(serviceArray, safe=False)
 
 
 @api_view(['GET'])
