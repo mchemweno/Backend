@@ -55,8 +55,8 @@ class Review(models.Model):
     rating = models.IntegerField(default=0)
     reviewee = models.ForeignKey(User, on_delete=models.CASCADE)
     reviewer = models.EmailField(max_length=25)
-    reviewer_fname = models.CharField(max_length=10, null=True)
-    rviewer_lname = models.CharField(max_length=10, null=True)
+    reviewer_fname = models.CharField(max_length=10, blank=True)
+    reviewer_lname = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
         return self.reviewee.email + " ." + str(self.rating) + " "
