@@ -28,4 +28,4 @@ class ServiceSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('review', 'rating', 'reviewee')
+        fields = '__all__'
