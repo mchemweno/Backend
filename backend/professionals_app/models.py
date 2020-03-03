@@ -30,24 +30,24 @@ class UserType(models.Model):
 
 
 class User(AbstractUser):
-    email = models.EmailField(verbose_name='email', max_length=25, unique=True)
-    bio = models.TextField(max_length=500)
-    company = models.CharField(max_length=25)
-    phone = models.IntegerField(null=False, blank=False)
+    email = models.EmailField(verbose_name='email', max_length=40, unique=True)
+    bio = models.TextField(max_length=500, null=True)
+    company = models.CharField(max_length=25, blank=True)
+    phone = models.IntegerField(null=True)
     profile_picture = ProcessedImageField(upload_to='profile_pictures/%y/%m/%d',
                                           processors=[ResizeToFill(48, 48)],
-                                          format='PNG', blank=True)
+                                          format='PNG', blank=True, null=True)
     average_rating = models.IntegerField(default=0)
     user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, default=1)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True)
-    REQUIRED_FIELDS = ['username', 'profile_picture', 'phone', 'first_name', 'last_name', 'company', 'bio', 'user_type',
-                       'service',
-                       'average_rating']
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, default=5)
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'profile_picture', 'phone', 'bio', 'user_type',
+                       'service', 'company', 'average_rating']
 
     USERNAME_FIELD = 'email'
 
-    def get_username(self):
-        return self.email
+
+def get_username(self):
+    return self.email
 
 
 class Review(models.Model):
