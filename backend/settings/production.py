@@ -31,7 +31,7 @@ SECRET_KEY = 'ku72ry8an2aq5(8l4b+di1!jvp7u)6&1obl-4-(h#)-qe7&#xx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://pacific-castle-77566.herokuapp.com/']
 
 # Application definition
 
@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'backend_professionals',
-        'USER': 'postgres',
-        'PASSWORD': 'Mark2540',
-        'HOST': 'Localhost',
+        'NAME': 'd9k17lpehvouvv',
+        'USER': 'akqzrzftedrxig',
+        'PASSWORD': '14a110801162e9adb0cf6cbf06d39c9c6f5794a6d77264847f75021ce47f6b15',
+        'HOST': 'ec2-3-229-210-93.compute-1.amazonaws.com',
         'PORT': '5432'
     }
 }
