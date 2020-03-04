@@ -31,7 +31,7 @@ SECRET_KEY = 'ku72ry8an2aq5(8l4b+di1!jvp7u)6&1obl-4-(h#)-qe7&#xx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://pacific-castle-77566.herokuapp.com/']
+ALLOWED_HOSTS = ['pacific-castle-77566.herokuapp.com']
 
 # Application definition
 
