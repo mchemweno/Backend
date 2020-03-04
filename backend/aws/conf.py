@@ -1,13 +1,15 @@
 import datetime
 
-AWS_ACCESS_KEY_ID = "AKIAJQDFIVSE3IW6VDNA"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = "AKIAROBCEZHYU5FSNLJM"
+AWS_SECRET_ACCESS_KEY = "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"
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = True
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEAFULT_ACL = None
 
-DEFAULT_FILE_STORAGE = 'backend.aws.utils.MediaRootS3BotoStorage'
-STATICFILES_STORAGE = 'backend.aws.utils.StaticRootS3BotoStorage'
+DEFAULT_FILE_STORAGE = 'backend.backend.aws.utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'backend.backend.aws.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'backendproffesionals'
 S3DIRECT_REGION = 'eu-west-2'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
