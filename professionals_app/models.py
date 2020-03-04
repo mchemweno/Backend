@@ -39,8 +39,9 @@ class User(AbstractUser):
                                           format='PNG', blank=True, null=True)
     average_rating = models.IntegerField(default=0)
     user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, default=1)
-    # service = models.ForeignKey(Service, on_delete=models.CASCADE, default=5)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, default=1)
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'profile_picture', 'phone', 'bio', 'company', 'user_type',
+                       'service',
                        'average_rating']
 
     USERNAME_FIELD = 'email'
