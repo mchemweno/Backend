@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'imagekit',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -170,12 +171,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-cdn-local')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-cdn-local')
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static-cdn-local")
 
 CORS_REPLACE_HTTPS_REFERER = True
 HOST_SCHEME = "https://"
@@ -186,3 +187,4 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 1000000
 SECURE_FRAME_DENY = True
+from backend.backend.aws.conf import *
