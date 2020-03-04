@@ -35,7 +35,6 @@ class User(AbstractUser):
     company = models.CharField(max_length=25, blank=True)
     phone = models.IntegerField(null=True)
     profile_picture = ProcessedImageField(upload_to='profile_pictures/%y/%m/%d',
-                                          processors=[ResizeToFill(48, 48)],
                                           format='PNG', blank=True, null=True)
     average_rating = models.IntegerField(default=0)
     user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, default=1)
