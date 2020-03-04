@@ -38,9 +38,10 @@ class User(AbstractUser):
                                           processors=[ResizeToFill(48, 48)],
                                           format='PNG', blank=True, null=True)
     average_rating = models.IntegerField(default=0)
-    #user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, default=1)
-    #service = models.ForeignKey(Service, on_delete=models.CASCADE, default=5)
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'profile_picture', 'phone', 'bio', 'company', 'average_rating']
+    user_type = models.ForeignKey(UserType, on_delete=models.CASCADE, default=1)
+    # service = models.ForeignKey(Service, on_delete=models.CASCADE, default=5)
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'profile_picture', 'phone', 'bio', 'company', 'user_type',
+                       'average_rating']
 
     USERNAME_FIELD = 'email'
 
