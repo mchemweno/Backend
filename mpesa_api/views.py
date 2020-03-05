@@ -45,11 +45,11 @@ def LipaNaMpesaCallBackURLView(request):
     checkout_request_id = request.data['Body']['stkCallback']['CheckoutRequestID']
     result_code = request.data['Body']['stkCallback']['ResultCode']
     result_description = request.data['Body']['stkCallback']['ResultDesc']
-    amount = request.data['Body']['stkCallback']['CallBackMetadata']['Item'][0]['Value']
+    amount = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value']
     print(amount, 'this should be amount')
-    mpesa_receipt_number = request.data['Body']['stkCallback']['CallBackMetadata']['Item'][1]['Value']
+    mpesa_receipt_number = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
     print(mpesa_receipt_number, "this is mpesa receipt number")
-    transaction_date = request.data['Body']['stkCallback']['CallBackMetadata']['Item'][2]['Value']
+    transaction_date = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value']
     print(transaction_date, 'This is the transaction date')
-    transaction_date = request.data['Body']['stkCallback']['CallBackMetadata']['Item'][3]['Value']
-    print(transaction_date, 'this is the phone number')
+    phone_number = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value']
+    print(phone_number, 'this is the phone number')
