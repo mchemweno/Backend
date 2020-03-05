@@ -54,10 +54,17 @@ class Review(models.Model):
     review = models.CharField(max_length=500)
     rating = models.IntegerField(default=0)
     reviewee = models.ForeignKey(User, on_delete=models.CASCADE)
-    reviewer = models.EmailField(max_length=25)
+    reviewer = models.EmailField(max_length=40)
     reviewer_fname = models.CharField(max_length=10, blank=True)
     reviewer_lname = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
         return self.reviewee.email + " ." + str(self.rating) + " "
         self.review
+
+
+class Report(models.Model):
+    complainant_email = models.EmailField(max_length=40)
+    complainant_fname = models.CharField(max_length=10)
+    complainant_lname = models.CharField(max_length=10)
+    complain_against = models.ForeignKey(User, on_delete=models.CASCADE)
