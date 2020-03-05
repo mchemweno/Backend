@@ -4,5 +4,5 @@ from .models import *
 
 class LipaNaMpesaSerializer(serializers.ModelSerializer):
     class Meta:
-        model= LipaNaMpesaOnline
-        #fields =
+        model = LipaNaMpesaOnline
+        fields = 'id'
