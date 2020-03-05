@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
-                  path('professionals_app/', include('professionals_app.urls'))
+                  path('professionals_app/', include('professionals_app.urls')),
+                  path('api/payments/', include('mpesa_api.urls'))
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
