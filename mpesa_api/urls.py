@@ -3,5 +3,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('lnm/', views.LipaNaMpesaCallBackURLView.as_view(), "lnm callback")
+    path('lnm/', views.LipaNaMpesaCallBackURLView)
 ]
