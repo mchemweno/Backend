@@ -68,3 +68,6 @@ class Report(models.Model):
     complainant_fname = models.CharField(max_length=10)
     complainant_lname = models.CharField(max_length=10)
     complain_against = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Complain against: ' + self.complain_against + ' Complainant Email: ' + self.complainant_email
