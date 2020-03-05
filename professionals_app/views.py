@@ -1,3 +1,5 @@
+import os
+
 import requests
 from django.core.mail import send_mail
 
@@ -9,7 +11,6 @@ from .serializers import *
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from backend.backend.settings.gmail_keys import *
 
 
 # Create your views here.
@@ -158,7 +159,7 @@ def report(request, *args, **kwargs):
         complain_against = data['complain_against']
         subject = f'Complaint against {complain_against}'
         message = f' User by the name {complainant_fname} {complainant_lname} has raised a complaint against user of id {complain_against}.\n Complainant email is {complainant_email}'
-        send_mail(subject, message, EMAIL_HOST_USER)
+        send_mail(subject, message, os.environ.get('email'))
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
