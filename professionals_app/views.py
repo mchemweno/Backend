@@ -142,6 +142,18 @@ def review(request, reviewee_id, *args, **kwargs):
         return Response(serializer.data)
 
 
+# Report view
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def report(request, *args, **kwargs):
+    data = request.data
+    serializer = ReportSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 # Reset password, send activation email and resend activation email.
 @api_view(['GET'])
 def get(request, uid, token, *args, **kwargs):

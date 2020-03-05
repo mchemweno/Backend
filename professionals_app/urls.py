@@ -20,6 +20,8 @@ urlpatterns = [
     path('popular', views.most_popular_services),
     # review urls
     path('reviews/<int:reviewee_id>', views.review),
+    # report urls
+    path('report/', views.report),
     # activation and password reset urls
     path('users/activate/<str:uid>/<str:token>', views.get),
     path('users/password-reset/<str:uid>/<str:token>', views.reset),
