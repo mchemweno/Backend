@@ -15,7 +15,7 @@ def lipa_na_mpesa():
         "BusinessShortCode": mpesa_keys.businessShortCode,
         "Password": decoded_password,
         "Timestamp": formatted_time,
-        "TransactionType": "CustomerBuyGoodsOnline",
+        "TransactionType": "CustomerPayBillOnline",
         "Amount": "4",
         "PartyA": mpesa_keys.phone_no,
         "PartyB": mpesa_keys.businessShortCode,
