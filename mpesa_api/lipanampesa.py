@@ -20,7 +20,7 @@ def lipa_na_mpesa():
         "PartyA": mpesa_keys.phone_no,
         "PartyB": mpesa_keys.businessShortCode,
         "PhoneNumber": mpesa_keys.phone_no,
-        "CallBackURL": "https://https://pacific-castle-77566.herokuapp.com/api/payments/lnm/",
+        "CallBackURL": "https://pacific-castle-77566.herokuapp.com/api/payments/lnm/",
         "AccountReference": "32168434",
         "TransactionDesc": "Tithe"
     }
