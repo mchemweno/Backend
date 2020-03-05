@@ -13,3 +13,6 @@ class LipaNaMpesaOnline(models.Model):
     mpesa_receipt_number = models.CharField(max_length=30)
     mpesa_transaction_date = models.DateTimeField()
     phone_number = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.mpesa_receipt_number + ' ' + str(self.amount) + ' ' + self.phone_number
