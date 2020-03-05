@@ -177,9 +177,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-AWS_ACCESS_KEY_ID = "AKIAROBCEZHY6NZFZZB3"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "professionals-backend"
 
 # AWS Config
 AWS_S3_FILE_OVERWRITE = False
