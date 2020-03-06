@@ -42,7 +42,7 @@ def user_detail(request, email, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def user_service(request, service_name, *args, **kwargs, ):
     try:
-        user = User.objects.get(service__service_name=service_name.capitalize())
+        user = User.objects.get(service__service_name=service_name)
         serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
@@ -117,7 +117,7 @@ def service_category(request, category, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def service_detail(request, service_name, *args, **kwargs):
     try:
-        service = Service.objects.get(service_name=service_name.capitalize())
+        service = Service.objects.get(service_name=service_name)
         service.searches += 1
         service.save()
         serializer = ServiceSerializer(service)
