@@ -103,7 +103,7 @@ def most_popular_services(request, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def service_category(request, category, *args, **kwargs):
     serviceArray = []
-    services = Service.objects.filter(category__category_name=category.capitalize())
+    services = Service.objects.filter(category__category_name=category)
     for service in services:
         user = User.objects.filter(service=service.id)
         serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
