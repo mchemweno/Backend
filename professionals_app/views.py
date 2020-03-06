@@ -157,8 +157,9 @@ def report(request, *args, **kwargs):
         complainant_fname = data['complainant_fname']
         complainant_lname = data['complainant_lname']
         complain_against = data['complain_against']
+        complaint = data['complaint']
         subject = f'Complaint against {complain_against}'
-        message = f' User by the name {complainant_fname} {complainant_lname} has raised a complaint against user of id {complain_against}.\nComplainant email is {complainant_email}'
+        message = f' User by the name {complainant_fname} {complainant_lname} has raised a complaint against user of id {complain_against}.\nComplainant email is {complainant_email}\n\nComplaint:\n{complaint}'
         send_mail(subject, message, os.environ.get('email'), [os.environ.get('email')])
         return Response(status=status.HTTP_201_CREATED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
