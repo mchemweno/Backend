@@ -35,7 +35,7 @@ def user_detail(request, email, *args, **kwargs):
         serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
-        return HttpResponse(status=404)
+        return Response(data={}, status=404)
 
 
 @api_view(['GET'])
@@ -46,7 +46,7 @@ def user_service(request, service_name, *args, **kwargs, ):
         serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
-        return HttpResponse(status=404)
+        return Response(data={}, status=404)
 
 
 # Category views
@@ -66,7 +66,7 @@ def category_detail(request, category_name, *args, **kwargs):
         serializer = CategorySerializer(category, context={"request": request})
         return JsonResponse(serializer.data, safe=False)
     except Category.DoesNotExist:
-        return HttpResponse(status=404)
+        return Response(data={}, status=404)
 
 
 # Service Views
