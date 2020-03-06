@@ -16,7 +16,7 @@ class UserCreateSerializer(UserCreateSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all_'
+        fields = '__all__'
 
 
 class ServiceSerializer(serializers.ModelSerializer):
