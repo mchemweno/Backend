@@ -51,7 +51,7 @@ def user_service(request, service_name, *args, **kwargs, ):
 
 # Category views
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def categories(request, *args, **kwargs):
     category = Category.objects.all()
     serializer = CategorySerializer(category, many=True)
@@ -59,7 +59,7 @@ def categories(request, *args, **kwargs):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def category_detail(request, category_name, *args, **kwargs):
     try:
         category = Category.objects.get(category_name=category_name)
@@ -71,7 +71,7 @@ def category_detail(request, category_name, *args, **kwargs):
 
 # Service Views
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def services(request, *args, **kwargs):
     serviceArray = []
     services = Service.objects.all()
@@ -86,7 +86,7 @@ def services(request, *args, **kwargs):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def most_popular_services(request, *args, **kwargs):
     serviceArray = []
     services = Service.objects.all().order_by('-searches')[:6]
@@ -100,7 +100,7 @@ def most_popular_services(request, *args, **kwargs):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def service_category(request, category, *args, **kwargs):
     serviceArray = []
     services = Service.objects.filter(category__category_name=category)
@@ -114,7 +114,7 @@ def service_category(request, category, *args, **kwargs):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def service_detail(request, service_name, *args, **kwargs):
     try:
         service = Service.objects.get(service_name=service_name)
