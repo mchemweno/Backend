@@ -118,7 +118,7 @@ def service_category(request, category, *args, **kwargs):
 def service_detail(request, service_name, *args, **kwargs):
     servicesArray = []
     try:
-        services = Service.objects.filter(service_name__contains=service_name)
+        services = Service.objects.filter(service_name__contains=service_name.capitalize())
         for service in services:
             service.searches += 1
             service.save()
