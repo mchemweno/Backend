@@ -116,14 +116,18 @@ def service_category(request, category, *args, **kwargs):
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def service_detail(request, service_name, *args, **kwargs):
+    servicesArray = []
     try:
-        service = Service.objects.get(service_name=service_name)
-        service.searches += 1
-        service.save()
-        serializer = ServiceSerializer(service)
-        user = User.objects.filter(service=service.id)
-        serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
-        return JsonResponse({'service': serializer.data, 'professionals': serializer1.data}, safe=False)
+        services = Service.objects.filter(service_name__contains=service_name)
+        for service in services:
+            service.searches += 1
+            service.save()
+            user = User.objects.filter(service=service.id)
+            serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
+            serializer = ServiceSerializer(service)
+            data = {'service': serializer.data, 'professionals': serializer1.data}
+            servicesArray.append(data)
+        return JsonResponse(servicesArray, safe=False)
     except Service.DoesNotExist:
         return Response(data={}, status=404)
 
