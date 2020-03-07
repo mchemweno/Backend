@@ -30,8 +30,6 @@ def user_list(request, *args, **kwargs):
 def user_detail(request, email, *args, **kwargs):
     try:
         user = User.objects.get(email__contains=email)
-        user.average_rating = calculate_average_review(id=user.id)
-        user.save()
         serializer = UserCreateSerializer(user, context={"request": request})
         return JsonResponse(serializer.data)
     except User.DoesNotExist:
@@ -141,6 +139,10 @@ def review(request, reviewee_id, *args, **kwargs):
         serializer = ReviewSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
+            user_id = serializer.data['reviewee']
+            user = User.objects.get(pk=user_id)
+            user.average_rating = calculate_average_review(id=user_id)
+            user.save()
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
     else:
