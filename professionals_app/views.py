@@ -77,7 +77,7 @@ def services(request, *args, **kwargs):
         user = User.objects.filter(service=service.id)
         serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
         serializer = ServiceSerializer(service)
-        data = {'service': serializer.data, 'professional': serializer1.data}
+        data = {'service': serializer.data, 'professionals': serializer1.data}
         serviceArray.append(data)
     print(serviceArray)
     return JsonResponse(serviceArray, safe=False)
@@ -92,7 +92,7 @@ def most_popular_services(request, *args, **kwargs):
         user = User.objects.filter(service=service.id)
         serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
         serializer = ServiceSerializer(service)
-        data = {'service': serializer.data, 'professional': serializer1.data}
+        data = {'service': serializer.data, 'professionals': serializer1.data}
         serviceArray.append(data)
     return JsonResponse(serviceArray, safe=False)
 
@@ -106,7 +106,7 @@ def service_category(request, category, *args, **kwargs):
         user = User.objects.filter(service=service.id)
         serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
         serializer = ServiceSerializer(service)
-        data = {'service': serializer.data, 'professional': serializer1.data}
+        data = {'service': serializer.data, 'professionals': serializer1.data}
         serviceArray.append(data)
     return JsonResponse(serviceArray, safe=False)
 
