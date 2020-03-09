@@ -50,8 +50,8 @@ def LipaNaMpesaCallBackURLView(request):
         result_description = request.data['Body']['stkCallback']['ResultDesc']
         amount = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value']
         mpesa_receipt_number = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
-        transaction_date = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value']
-        phone_number = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value']
+        transaction_date = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value']
+        phone_number = request.data['Body']['stkCallback']['CallbackMetadata']['Item'][4]['Value']
 
         str_transaction_date = str(transaction_date)
         transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
