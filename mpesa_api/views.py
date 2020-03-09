@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytz
 from django.http import JsonResponse
@@ -55,7 +55,10 @@ def LipaNaMpesaCallBackURLView(request):
 
         str_transaction_date = str(transaction_date)
         transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
-        timezone_transaction_datetime = pytz.timezone(transaction_datetime)
+
+        TIME_ZONE = timezone('Africa/Nairobi')
+        utc_transaction_datetime = transaction_datetime.utcnow()
+        timezone_transaction_datetime = pytz.utc.localize(utc_transaction_datetime, is_dst=None).astimezone(TIME_ZONE)
 
         our_model = LipaNaMpesaOnline.objects.create(
             merchant_request_id=merchant_request_id,
