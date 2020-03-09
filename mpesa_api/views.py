@@ -70,4 +70,5 @@ def LipaNaMpesaCallBackURLView(request):
 
         our_model.save()
         return Response({"OurResultDescription": "yey it worked"})
+    print(f'Result Code : {result_code}')
     return JsonResponse({'Result Code': result_code})
