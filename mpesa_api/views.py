@@ -55,7 +55,7 @@ def LipaNaMpesaCallBackURLView(request):
 
         str_transaction_date = str(transaction_date)
         transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
-        datetime_obj_nairobi = pytz.timezone('Africa/Nairobi').localize(transaction_datetime)
+        datetime_nairobi_timezone = pytz.timezone('Africa/Nairobi').localize(transaction_datetime)
 
         our_model = LipaNaMpesaOnline.objects.create(
             merchant_request_id=merchant_request_id,
@@ -64,7 +64,7 @@ def LipaNaMpesaCallBackURLView(request):
             result_description=result_description,
             amount=amount,
             mpesa_receipt_number=mpesa_receipt_number,
-            mpesa_transaction_date=datetime_obj_nairobi,
+            mpesa_transaction_date=datetime_nairobi_timezone,
             phone_number=phone_number
         )
 
@@ -72,3 +72,16 @@ def LipaNaMpesaCallBackURLView(request):
         return JsonResponse({"OurResultDescription": "yey it worked"})
     print(f'Result Code : {result_code}')
     return JsonResponse({'Result Code': result_code})
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def C2bValidationURLView(request):
+    print(request.data, ' this is the request data validation.')
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def C2bConfirmationURLView(request):
+    print(request.data, ' this is the request data confirmation.')
+    return JsonResponse({"h": 0})

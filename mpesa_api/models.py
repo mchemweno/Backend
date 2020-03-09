@@ -16,3 +16,7 @@ class LipaNaMpesaOnline(models.Model):
 
     def __str__(self):
         return self.mpesa_receipt_number + ' ' + str(self.amount) + ' ' + self.phone_number
+
+
+class C2BPayments(models.Model):
+    pass
