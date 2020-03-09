@@ -83,5 +83,21 @@ def C2bValidationURLView(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def C2bConfirmationURLView(request):
+    """
+    {'TransactionType': 'Pay Bill',
+    'TransID': 'OC941HBFM8',
+    'TransTime': '20200309193038',
+    'TransAmount': '2.00',
+     'BusinessShortCode': '600119',
+     'BillRefNumber': '1234567',
+     'InvoiceNumber': '',
+     'OrgAccountBalance': '150665.00',
+     'ThirdPartyTransID': '1234567890',
+     'MSISDN': '254708374149',
+     'FirstName': 'John',
+     'MiddleName': 'J.',
+     'LastName': 'Doe'}
+    """
+
     print(request.data, ' this is the request data confirmation.')
     return JsonResponse({"h": 0})
