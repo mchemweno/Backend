@@ -166,6 +166,14 @@ http://127.0.0.1:8000/professionals_app/services/service name
 * HTTP_200 - Service found
 * HTTP_404 - No service found
 
+## Get service by id
+http://127.0.0.1:8000/professionals_app/services/id/< service id >
+
+#### Responses
+* HTTP_200 - Service found
+* HTTP_404 - No service found
+
+
 ## Get most popular services
 http://127.0.0.1:8000/professionals_app/popular
 
