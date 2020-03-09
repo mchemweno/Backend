@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import pytz
 from django.http import JsonResponse
 from requests import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -54,7 +55,7 @@ def LipaNaMpesaCallBackURLView(request):
 
         str_transaction_date = str(transaction_date)
         transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
-        print(transaction_datetime, "This should be transaction date time")
+        timezone_transaction_datetime = pytz.timezone(transaction_datetime)
 
         our_model = LipaNaMpesaOnline.objects.create(
             merchant_request_id=merchant_request_id,
@@ -63,7 +64,7 @@ def LipaNaMpesaCallBackURLView(request):
             result_description=result_description,
             amount=amount,
             mpesa_receipt_number=mpesa_receipt_number,
-            mpesa_transaction_date=transaction_datetime,
+            mpesa_transaction_date=timezone_transaction_datetime,
             phone_number=phone_number
         )
 
