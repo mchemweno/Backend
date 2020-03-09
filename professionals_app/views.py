@@ -130,6 +130,22 @@ def service_detail(request, service_name, *args, **kwargs):
         return Response(data={}, status=404)
 
 
+@api_view(['GET'])
+def service_detail_id(request, service_id, *args, **kwargs):
+    try:
+        service = Service.objects.get(pk=service_id)
+        service.searches += 1
+        service.save()
+        user = User.objects.filter(service=service.id)
+        serializer1 = UserCreateSerializer(user, context={"request": request}, many=True)
+        serializer = ServiceSerializer(service)
+        data = {'service': serializer.data, 'professionals': serializer1.data}
+        return JsonResponse(data=data)
+
+    except Service.DoesNotExist:
+        return Response(data={}, status=404)
+
+
 # Review views
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])

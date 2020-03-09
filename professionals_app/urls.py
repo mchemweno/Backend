@@ -15,6 +15,7 @@ urlpatterns = [
     path('categories/<str:category_name>', views.category_detail),
     # service urls
     path('services/', views.services),
+    path('services/id/<int:service_id>', views.service_detail_id),
     path('services/<str:service_name>', views.service_detail),
     path('services/category/<str:category>', views.service_category),
     path('popular', views.most_popular_services),
