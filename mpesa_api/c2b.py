@@ -21,7 +21,7 @@ def register_url():
     print(response.text)
 
 
-register_url()
+#register_url()
 
 
 def simulate_c2b_transaction():
@@ -42,4 +42,4 @@ def simulate_c2b_transaction():
     print(response.text)
 
 
-#simulate_c2b_transaction()
+simulate_c2b_transaction()
