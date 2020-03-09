@@ -78,7 +78,7 @@ def LipaNaMpesaCallBackURLView(request):
 @permission_classes([AllowAny])
 def C2bValidationURLView(request):
     print(request.data, ' this is the request data validation.')
-    return JsonResponse({'ResultCode':0})
+    return JsonResponse({'ResultCode': 0})
 
 
 @api_view(['POST'])
