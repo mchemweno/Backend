@@ -55,7 +55,7 @@ def LipaNaMpesaCallBackURLView(request):
 
         str_transaction_date = str(transaction_date)
         transaction_datetime = datetime.strptime(str_transaction_date, "%Y%m%d%H%M%S")
-        datetime_obj_nairobi = pytz.timezone('Africa/Nairobi').localize(transaction_datetime)
+
 
         our_model = LipaNaMpesaOnline.objects.create(
             merchant_request_id=merchant_request_id,
@@ -64,7 +64,7 @@ def LipaNaMpesaCallBackURLView(request):
             result_description=result_description,
             amount=amount,
             mpesa_receipt_number=mpesa_receipt_number,
-            mpesa_transaction_date=datetime_obj_nairobi,
+            mpesa_transaction_date=transaction_datetime,
             phone_number=phone_number
         )
 
