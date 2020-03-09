@@ -98,6 +98,10 @@ def C2bConfirmationURLView(request):
      'MiddleName': 'J.',
      'LastName': 'Doe'}
     """
-
     print(request.data, ' this is the request data confirmation.')
-    return JsonResponse({"h": 0})
+    data = request.data
+    serializer = C2BPaymentSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=201)
+    return Response(status=404)
