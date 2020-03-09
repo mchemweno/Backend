@@ -11,4 +11,4 @@ class LipaNaMpesaSerializer(serializers.ModelSerializer):
 class C2BPaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = C2BPayments
-        fields = 'id'
+        fields = '__all__'
