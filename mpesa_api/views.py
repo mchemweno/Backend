@@ -39,7 +39,7 @@ def LipaNaMpesaCallBackURLView(request):
 
 
     """
-
+    print(request.data)
     merchant_request_id = request.data['Body']['stkCallback']['MerchantRequestID']
     checkout_request_id = request.data['Body']['stkCallback']['CheckoutRequestID']
     result_code = request.data['Body']['stkCallback']['ResultCode']
