@@ -11,8 +11,8 @@ def register_url():
         "ShortCode": mpesa_keys.shortcode,
         "ResponseType": "Completed",
         # This is what will happen incase safaricom sends you a response of your transaction and your server is not online. Options Canceled or Completed
-        "ConfirmationURL": "https://pacific-castle-77566.herokuapp.com/api/payments/c2b_confirmation",
-        "ValidationURL": "https://pacific-castle-77566.herokuapp.com/api/payments/c2b_validation"}
+        "ConfirmationURL": "https://pacific-castle-77566.herokuapp.com/api/payments/c2b_confirmation/",
+        "ValidationURL": "https://pacific-castle-77566.herokuapp.com/api/payments/c2b_validation/"}
 
     try:
         response = requests.post(api_url, json=request, headers=headers)
@@ -21,7 +21,7 @@ def register_url():
     print(response.text)
 
 
-#register_url()
+register_url()
 
 
 def simulate_c2b_transaction():
@@ -34,9 +34,12 @@ def simulate_c2b_transaction():
         "Amount": "2",
         "Msisdn": mpesa_keys.test_msisdn,
         "BillRefNumber": "1234567"}
-
-    response = requests.post(api_url, json=request, headers=headers)
+    try:
+        response = requests.post(api_url, json=request, headers=headers)
+    except:
+        response = requests.post(api_url, json=request, headers=headers, verify=False)
 
     print(response.text)
 
-simulate_c2b_transaction()
+
+#simulate_c2b_transaction()
