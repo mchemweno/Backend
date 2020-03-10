@@ -18,7 +18,7 @@ class LipaNaMpesaOnline(models.Model):
         return self.mpesa_receipt_number + ' ' + str(self.amount) + ' ' + self.phone_number
 
 
-class C2BPayments(models.Model):
+class C2BPayment(models.Model):
     TransactionType = models.CharField(max_length=20)
     TransID = models.CharField(max_length=15)
     TransTime = models.CharField(max_length=14)
