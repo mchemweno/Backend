@@ -33,7 +33,7 @@ def simulate_c2b_transaction(amount, bill_ref_number, msisdn):
     request = {
         "ShortCode": mpesa_keys.shortcode,
         "CommandID": "CustomerPayBillOnline",
-        "Amount": str(amount),
+        "Amount": amount,
         "Msisdn": str(msisdn),
         "BillRefNumber": str(bill_ref_number)}
     try:
