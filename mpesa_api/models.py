@@ -32,3 +32,6 @@ class C2BPayments(models.Model):
     FirstName = models.CharField(max_length=20)
     MiddleName = models.CharField(max_length=20, blank=True)
     LastName = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.TransID + ' ' + str(self.TransAmount) + ' ' + self.MSISDN
